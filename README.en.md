@@ -51,7 +51,8 @@ end-to-end tested with all three engines.
 
 Local checks pass: 24 offline tests, 75 skill-format checks and 105 phase-reference
 checks, including validation after extracting the distribution archive.
-GitHub Actions checks the exporter, catalogs, references and offline tests.
+The repository includes local commands for checking the exporter, catalogs,
+references and offline tests.
 
 These checks validate workflow/state behavior, not a finished game's quality.
 Natural-language routing and all 74 workflows have not been fully exercised

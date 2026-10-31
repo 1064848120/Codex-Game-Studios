@@ -7,7 +7,6 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Codex skills](https://img.shields.io/badge/Codex_skills-75-111827)
 ![Role briefs](https://img.shields.io/badge/role_briefs-49-6366f1)
-![Adapter checks](https://github.com/1064848120/Codex-Game-Studios/actions/workflows/codex-adapter.yml/badge.svg)
 
 Codex Game Studios 是面向 **Codex** 的游戏开发工作流框架。
 你用自然语言说出目标，工作室总控根据已有资料安排角色和步骤，
