@@ -1,440 +1,163 @@
-<p align="center">
-  <h1 align="center">Claude Code Game Studios</h1>
-  <p align="center">
-    Turn a single Claude Code session into a full game development studio.
-    <br />
-    49 agents. 74 skills. One coordinated AI team.
-  </p>
-</p>
-
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <a href=".claude/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".claude/skills"><img src="https://img.shields.io/badge/skills-74-green" alt="74 Skills"></a>
-  <a href=".claude/hooks"><img src="https://img.shields.io/badge/hooks-15-orange" alt="15 Hooks"></a>
-  <a href=".claude/rules"><img src="https://img.shields.io/badge/rules-14-red" alt="14 Rules"></a>
-  <a href="https://code.claude.com/docs"><img src="https://img.shields.io/badge/built%20for-Claude%20Code-f5f5f5?logo=anthropic" alt="Built for Claude Code"></a>
-  <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20this%20project-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy Me a Coffee"></a>
-  <a href="https://github.com/sponsors/Donchitos"><img src="https://img.shields.io/badge/GitHub%20Sponsors-Support%20this%20project-ea4aaa?logo=githubsponsors&logoColor=white" alt="GitHub Sponsors"></a>
-</p>
-
----
-
-## Why This Exists
-
-Building a game solo with AI is powerful — but a single chat session has no structure. No one stops you from hardcoding magic numbers, skipping design docs, or writing spaghetti code. There's no QA pass, no design review, no one asking "does this actually fit the game's vision?"
-
-**Claude Code Game Studios** solves this by giving your AI session the structure of a real studio. Instead of one general-purpose assistant, you get 49 specialized agents organized into a studio hierarchy — directors who guard the vision, department leads who own their domains, and specialists who do the hands-on work. Each agent has defined responsibilities, escalation paths, and quality gates.
-
-The result: you still make every decision, but now you have a team that asks the right questions, catches mistakes early, and keeps your project organized from first brainstorm to launch.
-
----
-
-## Table of Contents
-
-- [What's Included](#whats-included)
-- [Studio Hierarchy](#studio-hierarchy)
-- [Slash Commands](#slash-commands)
-- [Does it produce games, or documents?](#does-it-produce-games-or-documents)
-- [Getting Started](#getting-started)
-- [Configuration](#configuration)
-- [Upgrading](#upgrading)
-- [Project Structure](#project-structure)
-- [How It Works](#how-it-works)
-- [Design Philosophy](#design-philosophy)
-- [Customization](#customization)
-- [Platform Support](#platform-support)
-- [Community](#community)
-- [Supporting This Project](#supporting-this-project)
-- [License](#license)
+# Codex Game Studios
 
----
+**把一个游戏想法，变成有策划、有数值、有 UI 方案、有验收依据的开发流程。**
 
-## What's Included
+[English](README.en.md) · [使用指南](README.zh-CN.md) · [流程与能力边界](docs/ai/COMPATIBILITY.md) · [参与贡献](CONTRIBUTING.md)
 
-| Category | Count | Description |
-|----------|-------|-------------|
-| **Agents** | 49 | Specialized subagents across design, programming, art, audio, narrative, QA, and production |
-| **Skills** | 74 | Slash commands for every workflow phase (`/start`, `/design-system`, `/create-epics`, `/create-stories`, `/dev-story`, `/story-done`, etc.) |
-| **Hooks** | 15 | Automated validation on commits, pushes, asset changes, design-doc reads, writes and registries, session lifecycle, agent audit trail, and gap detection |
-| **Rules** | 14 | Path-scoped coding standards enforced when editing gameplay, engine, AI, UI, network code, scene and asset files, and more |
-| **Templates** | 62 | Document templates for GDDs, UX specs, ADRs, sprint plans, HUD design, accessibility, and more |
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Codex skills](https://img.shields.io/badge/Codex_skills-75-111827)
+![Role briefs](https://img.shields.io/badge/role_briefs-49-6366f1)
+![Adapter checks](https://github.com/1064848120/Codex-Game-Studios/actions/workflows/codex-adapter.yml/badge.svg)
 
-## Studio Hierarchy
+Codex Game Studios 是面向 **Codex** 的游戏开发工作流框架。
+你用自然语言说出目标，工作室总控根据已有资料安排角色和步骤，
+从创意探索、玩家定位、系统设计，到技术方案、开发、测试与复核持续推进。
+**不需要逐个输入技能命令，也不需要安装 Claude Code。**
 
-Agents are organized into three tiers, matching how real studios operate:
-
-```
-Tier 1 — Directors
-  creative-director    technical-director    producer
-
-Tier 2 — Department Leads
-  game-designer        lead-programmer       art-director
-  audio-director       narrative-director    qa-lead
-  release-manager      localization-lead
+本项目是 [Donchitos / Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios)
+的**非官方衍生适配**。原项目的角色、工作流、规则与模板构成基础；
+本仓库增加 Codex 入口、内部流程衔接和可恢复的进度账本。保留原作者版权与 MIT 许可。
 
-Tier 3 — Specialists
-  gameplay-programmer  engine-programmer     ai-programmer
-  network-programmer   tools-programmer      ui-programmer
-  systems-designer     level-designer        economy-designer
-  technical-artist     sound-designer        writer
-  world-builder        ux-designer           prototyper
-  performance-analyst  devops-engineer       analytics-engineer
-  security-engineer    qa-tester             accessibility-specialist
-  live-ops-designer    community-manager
-```
+## 为什么做这个项目
 
-Each agent declares a model in its frontmatter: the three directors ask for
-Opus, `lead-programmer` and fifteen specialists name Sonnet, and the remaining thirty
-**inherit your session's model**. Treat the tiers as seniority of role, not as
-a billing plan — most of the studio runs on whatever model you are already using.
+和 AI 一条条聊天改游戏，很容易变成：有需求就加代码，数值随手填，
+界面各做各的，修一个问题又影响另一个系统。
 
-### Engine Specialists
+这个项目把相关工作放进同一条流程：
+**先弄清玩家体验与规则，记录系统依赖和数据，再实现并保留验证证据。**
 
-The template includes agent sets for all three major engines. Use the set that matches your project:
+你负责方向、取舍和试玩反馈；Codex 负责组织工作、保存决策和执行当前目标。
+它是辅助制作的工作室流程，不是保证一键生成好游戏的引擎。
 
-| Engine | Lead Agent | Sub-Specialists |
-|--------|-----------|-----------------|
-| **Godot 4** | `godot-specialist` | GDScript, Shaders, GDExtension |
-| **Unity** | `unity-specialist` | DOTS/ECS, Shaders/VFX, Addressables, UI Toolkit |
-| **Unreal Engine 5** | `unreal-specialist` | GAS, Blueprints, Replication, UMG/CommonUI |
+## 你可以从任何阶段开始
 
-## Slash Commands
+| 你的情况 | 工作室怎么开始 |
+|---|---|
+| 完全没有具体想法 | 了解偏好、目标玩家与制作条件，提出可比较的方向 |
+| 有一个模糊点子 | 明确游戏类型、核心循环、平台和范围，规划验证原型 |
+| 已经有策划文档 | 整理已确定规则、冲突、数值缺口与待决策内容 |
+| 有原型或现成代码 | 检查现状，接续有效成果，补齐必要设计与验证 |
+| 只想修一个问题 | 路由到相关设计、实现和回归检查，不重走整套制作流程 |
 
-Type `/` in Claude Code to access all 74 skills:
+引擎与技术选择要服从目标平台、团队经验和性能要求；已有选择会保留。
+资料涵盖 **Godot、Unity、Unreal**，但本适配尚未对三种引擎完成逐一端到端实测。
 
-**Onboarding & Navigation**
-`/start` `/help` `/project-stage-detect` `/setup-engine` `/adopt` `/settings`
+## 怎样推进
 
-**Game Design**
-`/brainstorm` `/map-systems` `/design-system` `/quick-design` `/review-all-gdds` `/propagate-design-change`
+~~~mermaid
+flowchart LR
+    A["描述目标 / 提供资料"] --> B["总控判断现状与范围"]
+    B --> C["策划 · 数值 · UI · 技术方案"]
+    C --> D["分阶段实现"]
+    D --> E["测试 · 观察 · 复核"]
+    E --> F{"当前目标完成？"}
+    F -->|未完成| D
+    F -->|完成| G["交付与进度记录"]
+    C -.关键选择.-> H["用户决策"]
+    H --> C
+~~~
 
-**Art & Assets**
-`/art-bible` `/asset-spec` `/asset-audit`
+原制作流程保留七个阶段：
+**概念 → 系统设计 → 技术准备 → 预制作 → 正式制作 → 打磨 → 发布准备**。
 
-**UX & Interface Design**
-`/ux-design` `/ux-review`
+总控按项目规模与当前目标选择路线。仅策划、仅评审、原型或小修复都可以有边界；
+不会因为有七个阶段就强行把每个请求做成商业游戏发布。
 
-**Architecture**
-`/create-architecture` `/architecture-decision` `/architecture-review` `/create-control-manifest`
+## 快速开始
 
-**Stories & Sprints**
-`/create-epics` `/create-stories` `/dev-story` `/sprint-plan` `/sprint-status` `/story-readiness` `/story-done` `/estimate`
+1. 点击本仓库 **Use this template** 创建自己的项目，或克隆后建立自己的远程仓库。
+2. 在 Codex 中打开项目根目录，即包含 **AGENTS.md** 的目录。
+3. 直接描述目标，例如：
 
-**Reviews & Analysis**
-`/design-review` `/code-review` `/balance-check` `/content-audit` `/scope-check` `/perf-profile` `/tech-debt` `/gate-check` `/consistency-check` `/security-audit`
+> 我想用 Godot 做一款生存防守游戏，目前只有一个模糊想法。
+> 请按工作室流程带我推进：先确定目标玩家、核心玩法和合理规模，
+> 再整理系统、数值经济、UI 与技术方案。需要我决定方向时再问我。
 
-**QA & Testing**
-`/qa-plan` `/smoke-check` `/soak-test` `/regression-suite` `/test-setup` `/test-helpers` `/test-evidence-review` `/test-flakiness` `/skill-test` `/skill-improve`
+或者：
 
-**Production**
-`/milestone-review` `/retrospective` `/bug-report` `/bug-triage` `/reverse-document` `/playtest-report`
+> 这是我的策划文档和现有代码。请先检查冲突和缺口，
+> 然后按工作室流程完成一个可以试玩的核心循环。
 
-**Release**
-`/release-checklist` `/launch-checklist` `/changelog` `/patch-notes` `/hotfix` `/day-one-patch`
+后续只需正常交流。“继续”会依据保存的进度恢复。
+**75 个技能是内部工具，不是要求用户逐个操作的菜单。**
 
-**Creative & Content**
-`/prototype` `/vertical-slice` `/onboard` `/localize`
+### 环境要求
 
-**Team Orchestration** (coordinate multiple agents on a single feature)
-`/team-combat` `/team-narrative` `/team-ui` `/team-release` `/team-polish` `/team-audio` `/team-level` `/team-live-ops` `/team-qa`
+- 可读取项目指令与技能、编辑文件和执行工具的 Codex。
+- Python **3.10+**：用于本地流程账本与校验，脚本只依赖标准库。
+- Git；使用保留的 Bash 辅助工具时需要 Bash，Windows 可用 Git Bash。
+- 真正制作和运行游戏时，需要相应游戏引擎及必要的运行/观察工具。
 
-## Does it produce games, or documents?
+无需为本框架配置额外的 Claude 账号或模型 API key。
+Codex 本身仍使用你自己的账号、权限与额度。
 
-A fair question, and the answer is a measurement rather than a sample project.
-Four games were built from one brief at different `modes.rigor` levels and the
-documents each wrote **before its first line of game code** were counted:
+## 包含什么
 
-| `modes.rigor` | Docs before first line of game code | Time |
-|---|---:|---:|
-| `minimal` | **1** (the one-page brief) | 0 min |
-| `standard` | 30 | 58 min |
+| 部分 | 内容 |
+|---|---|
+| 工作室总控 | 自然语言入口、内部选步骤、衔接与恢复 |
+| 角色说明 | 49 个专业角色，涵盖策划、经济、UI、引擎、程序、QA 等 |
+| 工作流 | 74 个原项目工作流，加 1 个 Codex 总控技能 |
+| 规则与资料 | 14 组规则、原项目文档模板及引擎专项资料 |
+| 进度账本 | 当前目标、步骤、阻塞问题、验收记录与证据哈希 |
+| 完成检查 | 缺少证据或存在待决问题不能通过；证据变更需要复查 |
+| 开发维护 | 可重复生成适配文件、结构校验、离线测试和 GitHub Actions |
 
-All of them produced a running, tested game. Two blind reviewers and a human
-playtest then ranked the `standard` build **last** — the extra 29 documents
-bought traceability, not a better game.
+49 个角色是职责与提示词，**不等于同时运行 49 个 Agent**。
+允许且支持时可用 Codex 原生子代理；顺序角色审阅会注明为自审。
 
-### It runs the game and looks at it
+## 验证与当前边界
 
-The measurement above is about cost. The other half is whether the thing works,
-and for a game that means someone has to *look* at it — a passing test says
-nothing about a menu drawn off-screen. So a story that changes anything the
-player sees is not closed until the game has been launched, observed, and a
-screenshot retained in `production/qa/evidence/`. A parse check is not a run.
-This holds at every rigor level, including `minimal`, where automated tests are
-waived but the look is not.
+已在本地通过：
 
-The games themselves are deliberately **not** shipped here: this is a template
-you clone to start your own project, and somebody else's game in your repo is
-clutter, not evidence.
+- **24 项离线测试**：步骤衔接、已有项目接续、设计范围、中断恢复、
+  失败阻塞、证据失效、修复插入、归档和生成保护。
+- **75 个技能格式检查**，**105 处阶段引用检查**。
+- 独立解压包重新运行校验与测试。
 
-## Getting Started
+这些是流程、状态和结构验证，**不是已经用本框架完整制作并试玩游戏的证明**。
+自然语言路由、设计质量和全部 74 个工作流的实际效果仍需持续验证。
 
-### Prerequisites
+还需要了解：
 
-- [Git](https://git-scm.com/)
-- [Claude Code](https://code.claude.com/docs/en/setup) — the native installer is recommended (`npm install -g @anthropic-ai/claude-code` also works, on Node.js 22+)
-- [Python 3](https://www.python.org/) — reads `project.yaml` for every skill and hook; without it every setting silently falls back to its default
-- Bash — runs every hook; built into macOS and Linux, and on Windows it comes with [Git for Windows](https://git-scm.com/downloads/win)
-- **Recommended**: [jq](https://jqlang.github.io/jq/) (for hook validation)
-
-Hooks fail gracefully if optional tools are missing — you just lose validation — with one deliberate exception: a commit that stages data JSON is blocked when there is no Python to validate it.
-
-### Setup
-
-1. **Clone or use as template**:
-   ```bash
-   git clone https://github.com/Donchitos/Claude-Code-Game-Studios.git my-game
-   cd my-game
-   ```
-
-2. **Open Claude Code in the project's root folder** (the one holding
-   `CLAUDE.md` and `project.yaml`) and start a session:
-   ```bash
-   claude
-   ```
-   Starting it in a subfolder such as `src/` skips the project's hooks, deny
-   rules and ask-first permission mode.
-
-3. **Run `/start`** — the system asks where you are (no idea, vague concept,
-   clear design, existing work) and guides you to the right workflow. No assumptions.
-
-   Or jump directly to a specific skill if you already know what you need:
-   - `/brainstorm` — explore game ideas from scratch
-   - `/setup-engine godot 4.7` — configure your engine if you already know
-   - `/project-stage-detect` — analyze an existing project
-
-## Configuration
-
-`project.yaml` at the repo root is the single source of truth for how the
-studio behaves on your project — engine, naming conventions, and a `modes`
-block that controls how much process every skill enforces. `/start` writes it
-for you; you rarely need to hand-edit it.
-
-The one question that matters most is **`modes.rigor`** — `minimal`, `standard`,
-or `full`. It's a single front door over six separate knobs (`workflow` —
-which GDD sections are required, `docs.density`, `qa.level`,
-`story_granularity`, `review_mode` — how many director agents review your work,
-and `team.size`), so `/start` asks it once instead of six times:
-
-- **`minimal`** (default) — jam-game speed. No GDDs required, terse docs, minimal QA evidence, solo review. `/start` → `/setup-engine` → `/brainstorm` (a one-page brief) → `/create-stories` → `/dev-story` ↔ `/story-done`.
-- **`standard`** — 5 required GDD sections, balanced doc depth, standard QA evidence, lean review.
-- **`full`** — all 8 GDD sections, thorough docs, full QA evidence on every story type, full director review.
-
-`minimal` is the default because the heavier tier costs more to reach working
-code without producing a better result, and gives nothing back when someone new
-picks the project up. Raise it in one `/settings` call when your project grows
-— `/help` and `/gate-check` will suggest it when they see the signs.
-
-Two escape hatches keep one setting from being a blunt instrument.
-**`system_overrides`** holds a single system to a higher standard than the rest
-of the project — your combat system gets the full treatment while everything
-else stays light. **`testing.strict`** sets, per test type (logic, integration,
-visual, UI, config), whether missing evidence blocks a story or merely warns.
-
-Any of the six underlying knobs can still be set individually if you want a mix
-(e.g. `workflow: full` with `docs.density: terse` — comprehensive but compact).
-Two of them — `review_mode` (`full` / `lean` / `solo`) and `team.size` — are
-also **personal**: rigor sets the team-wide default, but you can override them
-per-developer in a gitignored `project.local.yaml` without touching the shared
-config. `modes.automation` (how often the AI pauses to ask before it acts) sits
-outside rigor and is likewise personally overridable.
-
-View or change any setting with the `/settings` skill:
-
-```
-/settings                              # view effective config
-/settings modes.review_mode            # view one setting
-/settings modes.rigor=full             # write to project.yaml (team-wide)
-/settings --local modes.review_mode=solo   # write to project.local.yaml (just you)
-```
-
-Full schema and per-setting behavior: `.claude/docs/effects-map.md`.
-
-## Upgrading
-
-Already using an older version of this template? See [UPGRADING.md](UPGRADING.md)
-for step-by-step migration instructions, a breakdown of what changed between
-versions, and which files are safe to overwrite vs. which need a manual merge.
-
-## Project Structure
-
-```
-CLAUDE.md                           # Master configuration
-.claude/
-  settings.json                     # Hooks, permissions, safety rules
-  agents/                           # 49 agent definitions (markdown + YAML frontmatter)
-  skills/                           # 74 slash commands (subdirectory per skill)
-  hooks/                            # 18 scripts (bash) — 15 event hooks, two helpers they
-                                    #   source (yaml-helper.sh, update-check.sh), and one
-                                    #   opt-in diagnostic you wire yourself
-  rules/                            # 14 path-scoped coding standards
-  statusline.sh                     # Status line script (context%, model, stage, epic breadcrumb)
-  docs/
-    workflow-catalog.yaml           # 7-phase pipeline definition (read by /help)
-    templates/                      # 62 document templates (+ per-section guidance)
-src/                                # Game source code (Godot). The code root is
-                                    #   ENGINE-SPECIFIC: Unity compiles only
-                                    #   Assets/, Unreal builds from Source/<Module>/
-assets/                             # Art, audio, VFX, shaders, data files
-design/                             # GDDs, narrative docs, level designs
-docs/                               # Technical documentation and ADRs
-tests/                              # Test suites (unit, integration, performance, playtest)
-tools/                              # Build and pipeline tools
-prototypes/                         # Throwaway prototypes (isolated from src/)
-production/                         # Sprint plans, milestones, release tracking
-studio-tests/                       # QA for the skills and agents themselves — see below
-```
-
-### Testing your customizations
-
-CCGS is a template you are meant to edit. `studio-tests/` is how
-you check that an edited or newly written skill still holds up — a catalog of all
-74 skills and 49 agents, per-category quality rubrics, behavioral specs, and
-templates for writing specs of your own.
-
-```
-/skill-test static [name]     # structural linter — 7 compliance checks
-/skill-test category [name]   # category-specific quality rubric
-/skill-test spec [name]       # behavioral spec assertions
-/skill-test audit             # coverage report across skills and agents
-/skill-improve [name]         # test-fix-retest loop; keeps or reverts on score change
-```
-
-It tests the *framework*, never your game — game tests live in `tests/`.
-
-## How It Works
-
-### Agent Coordination
-
-Agents follow a structured delegation model:
-
-1. **Vertical delegation** — directors delegate to leads, leads delegate to specialists
-2. **Horizontal consultation** — same-tier agents can consult each other but can't make binding cross-domain decisions
-3. **Conflict resolution** — disagreements escalate up to the shared parent (`creative-director` for design, `technical-director` for technical)
-4. **Change propagation** — cross-department changes are coordinated by `producer`
-5. **Domain boundaries** — agents don't modify files outside their domain without explicit delegation
-
-### Collaborative, Not Autonomous
-
-This is **not** an auto-pilot system. Every agent follows a strict collaboration protocol:
-
-1. **Ask** — agents ask questions before proposing solutions
-2. **Present options** — agents show 2-4 options with pros/cons
-3. **You decide** — the user always makes the call
-4. **Draft** — agents show work before finalizing
-5. **Approve** — nothing gets written without your sign-off
-
-You stay in control. The agents provide structure and expertise, not autonomy.
-
-That is how a terminal session started at the project root behaves out of the
-box. The `guided` and `autonomous` automation settings, and Claude Code's own
-auto mode, trade some of these prompts for speed; see
-[setup-requirements.md](.claude/docs/setup-requirements.md) for the routes into
-auto mode.
-
-### Automated Safety
-
-**Hooks** run automatically on every session:
-
-| Hook | Trigger | What It Does |
-|------|---------|--------------|
-| `validate-commit.sh` | PreToolUse (Bash, PowerShell) | Checks for hardcoded values, TODO format, JSON validity, design doc sections — exits early if the command is not `git commit` |
-| `validate-push.sh` | PreToolUse (Bash, PowerShell) | Warns on pushes to protected branches, and on `git tag`, `git merge`, `gh release`, `butler push` and `steamcmd +run_app_build` — exits early for any other command |
-| `validate-read.sh` | PreToolUse (Read) | Refuses a whole-file read of a design doc over 40 KB and answers with its headings, so the retry reads one section (`features.read_guard`) |
-| `validate-write.sh` | PreToolUse (Write/Edit) | Warns, never blocks, when a write would break a rule the skills state: a file they never overwrite, the config guard, the prototype boundary, a localization freeze |
-| `validate-registry.sh` | PreToolUse (Write/Edit) | Warns when a write to the entity or TR-ID registry would delete or renumber an entry, or set a status its header does not list |
-| `validate-assets.sh` | PostToolUse (Write/Edit) | Checks data-file JSON under `assets/`, `Assets/` or `Content/`, and asset naming in Godot's `assets/` only — exits early if the file is under none of them |
-| `session-start.sh` | Session open | Shows current branch and recent commits for orientation |
-| `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/start`) and missing design docs when code or prototypes exist |
-| `pre-compact.sh` | Before compaction | Logs the compaction (its output does not reach Claude — `session-start.sh` restores context afterwards) |
-| `notify.sh` | Permission prompt, or idle about a minute | Shows Windows toast notification via PowerShell |
-| `session-stop.sh` | Every response end, in the background | Archives `active.md` to session log and records git activity |
-| `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
-| `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
-| `validate-agent-artifact.sh` | Agent stops | Warns when a subagent stops without writing the file its brief named |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.claude/skills/` change |
+- 原版的 **15 个 Claude 事件 Hook 没有全部移植为 Codex 自动 Hook**。
+- 自动衔接发生在正在运行的 Codex 任务中；关闭会话后不会在后台无限开发。
+- 缺少运行或观察工具时，游戏验收必须明确标为未验证。
+- 引擎、素材质量、经济平衡和游戏乐趣仍需实际制作、模拟与试玩。
 
-> **Note**: `validate-commit.sh`, `validate-push.sh`, `validate-read.sh`, `validate-write.sh`, `validate-registry.sh`, `validate-assets.sh` and `validate-skill-change.sh` fire on every Bash, PowerShell, Read, Write or Edit tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
+详见 [验证记录](docs/ai/VALIDATION.md) 和 [兼容说明](docs/ai/COMPATIBILITY.md)。
 
-**Permission rules** in `settings.json` auto-allow test runs and block dangerous operations (force push, `rm -rf`, reading `.env` files) in both the Bash and PowerShell tools. Read-only commands such as `git status`, `git log` and `ls` need no rule: Claude Code runs them without asking. The `git` rules match anywhere after `git`, so a git command whose text only mentions `push` followed later by ` +` or ` -f`, `clean` followed by ` -f`, or `reset` followed by `--hard` — a commit message such as `git commit -m "push + pull"` included — is denied too: reword the message.
+## 项目结构
 
-### Path-Scoped Rules
+~~~text
+AGENTS.md                  Codex 默认入口
+.agents/skills/            74 个工作流入口 + 工作室总控
+ai/                       适配后的角色、工作流、规则与资料
+.claude/                  保留的上游来源；不是 Codex 的执行配置
+docs/ai/                  总控协议、状态格式与验证记录
+tools/ai/                 转换、校验、进度账本
+tests/adapter/            离线流程测试
+design/                   游戏设计产物
+production/               制作计划与进度记录
+src/                      游戏代码位置由引擎配置决定
+~~~
 
-Coding standards are automatically enforced based on file location. The paths
-below are Godot's. Each rule also matches the Unity and Unreal layouts: the code
-rules match C# under `Assets/**/Gameplay/` and C++ under `Source/**/Gameplay/` (and `Core`,
-`AI`, `Networking`, `UI`), data matches JSON under `Assets/**/Data/` and
-`Content/**/Data/`, shaders match by file type, and tests match
-C# under `Assets/Tests/` and C++ under `Source/**/Tests/`.
+## 开发与贡献
 
-| Path | Enforces |
-|------|----------|
-| `src/gameplay/**` | Data-driven values, delta time usage, no UI references |
-| `src/core/**` | Zero allocations in hot paths, thread safety, API stability |
-| `src/ai/**` | Performance budgets, debuggability, data-driven parameters |
-| `src/networking/**` | Server-authoritative, versioned messages, security |
-| `src/ui/**` | No game state ownership, localization-ready, accessibility |
-| `design/gdd/**` | Required sections per `modes.workflow`, formula format, edge cases |
-| `design/narrative/**` | Lore consistency, character voice, canon levels |
-| `assets/data/**/*.json` | JSON validity, naming conventions, schema rules |
-| `assets/shaders/**` | Naming conventions, performance targets, cross-platform rules |
-| `**/*.tscn`, `**/*.tres` | Scene and resource files changed in the editor where possible; safe hand-edit rules |
-| `tests/**` | Test naming, coverage requirements, fixture patterns |
-| `prototypes/**` | Relaxed standards, README required, hypothesis documented |
+~~~bash
+python tools/ai/export-universal.py --check
+python tools/ai/validate.py
+python -m unittest discover -s tests/adapter -v
+~~~
 
-## Design Philosophy
+生成文件请通过源内容或转换器修改，不要直接覆盖生成副本。
+报告问题时附上复现步骤和脱敏后的证据，见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-This template is grounded in professional game development practices:
+## 致谢与许可证
 
-- **MDA Framework** — Mechanics, Dynamics, Aesthetics analysis for game design
-- **Self-Determination Theory** — Autonomy, Competence, Relatedness for player motivation
-- **Flow State Design** — Challenge-skill balance for player engagement
-- **Bartle Player Types** — Audience targeting and validation
-- **Verification-Driven Development** — Tests first, then implementation
+感谢 **Donchitos** 创建并开放 Claude-Code-Game-Studios。
+本项目基于上游提交 `05ad7c8a5b8aa2aa86bbd3439ae7cf7295cac418`，
+遵循 **MIT License**；保留原作者声明，适配层同样以 MIT 开源。
 
-## Customization
-
-This is a **template**, not a locked framework. Everything is meant to be customized:
-
-- **Add/remove agents** — delete agent files you don't need, add new ones for your domains
-- **Edit agent prompts** — tune agent behavior, add project-specific knowledge
-- **Modify skills** — adjust workflows to match your team's process
-- **Add rules** — create new path-scoped rules for your project's directory structure
-- **Tune hooks** — adjust validation strictness, add new checks
-- **Pick your engine** — use the Godot, Unity, or Unreal agent set (or none)
-- **Tune process weight** — `modes.rigor` and its underlying knobs in `project.yaml` (see [Configuration](#configuration)). Override per-run with `--review solo` on any skill.
-
-## Platform Support
-
-Primary development on **Windows 10** with Git Bash. The hooks and scripts are also tested on **macOS** — its stock bash 3.2 and BSD tools, with and without `jq` — and on **Linux**. All hooks use POSIX-compatible patterns (`grep -E`, not `grep -P`) and include fallbacks for missing tools. The `notify.sh` hook uses PowerShell for Windows toast notifications and is a no-op elsewhere — desktop notifications on macOS/Linux are not yet wired. Please file issues for any platform-specific breakage.
-
-## Community
-
-- **Discussions** — [GitHub Discussions](https://github.com/Donchitos/Claude-Code-Game-Studios/discussions) for questions, ideas, and showcasing what you've built
-- **Issues** — [Bug reports and feature requests](https://github.com/Donchitos/Claude-Code-Game-Studios/issues)
-
----
-
-## Supporting This Project
-
-Claude Code Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
-
-<p>
-  <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"></a>
-  &nbsp;
-  <a href="https://github.com/sponsors/Donchitos"><img src="https://img.shields.io/badge/GitHub%20Sponsors-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="GitHub Sponsors"></a>
-</p>
-
-- **[Buy Me a Coffee](https://www.buymeacoffee.com/donchitos3)** — one-time support
-- **[GitHub Sponsors](https://github.com/sponsors/Donchitos)** — recurring support through GitHub
-
-Sponsorships help fund time spent maintaining skills, adding new agents, keeping up with Claude Code and engine API changes, and responding to community issues.
-
----
-
-*Built for Claude Code. Maintained and extended — contributions welcome via [GitHub Discussions](https://github.com/Donchitos/Claude-Code-Game-Studios/discussions).*
-
-## License
-
-MIT License. See [LICENSE](LICENSE) for details.
+本项目与 OpenAI、Anthropic 及上游作者不存在官方合作或背书关系。
+详情见 [LICENSE](LICENSE) 与 [UPSTREAM.md](UPSTREAM.md)。

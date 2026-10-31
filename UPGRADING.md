@@ -1,5 +1,10 @@
 # Upgrading Claude Code Game Studios
 
+> **Codex adaptation:** this is the retained upstream upgrade guide. First read
+> UPSTREAM.md and preserve local changes to the director, converter and tests.
+> Do not overwrite the adaptation wholesale. Regenerate and run adapter checks
+> after reviewing upstream changes. ADAPTER-CHANGELOG.md tracks this derivative.
+
 This guide covers upgrading your existing game project repo from one version
 of the template to the next.
 

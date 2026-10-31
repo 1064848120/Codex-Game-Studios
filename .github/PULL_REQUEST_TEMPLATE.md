@@ -1,27 +1,12 @@
-## Summary
+## Problem and resulting behavior
 
-Brief description of what this PR does.
+## Validation
+- [ ] Exporter and reference checks pass.
+- [ ] Relevant offline tests pass.
+- [ ] Actual model/game observations are distinguished from structural tests.
+- [ ] User scope and meaningful decision points are preserved.
+- [ ] Generated files were regenerated from source where appropriate.
+- [ ] No secrets, machine-specific paths or private game content are included.
+- [ ] Upstream attribution and MIT license are retained.
 
-## Type of Change
-
-- [ ] New agent
-- [ ] New skill
-- [ ] New hook or rule
-- [ ] Bug fix
-- [ ] Documentation improvement
-- [ ] Other:
-
-## Changes
-
--
--
--
-
-## Checklist
-
-- [ ] I've tested this in a Claude Code session
-- [ ] New agents include the Collaboration Protocol section
-- [ ] New skills use the subdirectory format (`.claude/skills/<name>/SKILL.md`)
-- [ ] Reference docs are updated (agent-roster, skills-reference, hooks-reference, rules-reference)
-- [ ] Hooks use `grep -E` (POSIX) and fail gracefully without jq/python
-- [ ] No hardcoded paths or platform-specific assumptions
+## Known limitations

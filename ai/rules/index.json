@@ -1,0 +1,72 @@
+[
+  {
+    "name": "agent-memory",
+    "path": "ai/rules/agent-memory.md",
+    "source_scope": "paths:\n  - \".claude/agent-memory/**\""
+  },
+  {
+    "name": "ai-code",
+    "path": "ai/rules/ai-code.md",
+    "source_scope": "paths:\n  - \"src/ai/**\"\n  - \"Assets/**/{AI,Ai,ai}/**/*.cs\"\n  - \"Source/**/{AI,Ai,ai}/**/*.{h,cpp}\""
+  },
+  {
+    "name": "data-files",
+    "path": "ai/rules/data-files.md",
+    "source_scope": "paths:\n  - \"assets/data/**/*.json\"\n  - \"Assets/**/{Data,data}/**/*.json\"\n  - \"Content/**/{Data,data}/**/*.json\""
+  },
+  {
+    "name": "design-docs",
+    "path": "ai/rules/design-docs.md",
+    "source_scope": "paths:\n  - \"design/gdd/**\""
+  },
+  {
+    "name": "engine-code",
+    "path": "ai/rules/engine-code.md",
+    "source_scope": "paths:\n  - \"src/core/**\"\n  - \"Assets/**/{Core,core}/**/*.cs\"\n  - \"Source/**/{Core,core}/**/*.{h,cpp}\""
+  },
+  {
+    "name": "gameplay-code",
+    "path": "ai/rules/gameplay-code.md",
+    "source_scope": "paths:\n  - \"src/gameplay/**\"\n  - \"Assets/**/{Gameplay,gameplay}/**/*.cs\"\n  - \"Source/**/{Gameplay,gameplay}/**/*.{h,cpp}\""
+  },
+  {
+    "name": "narrative",
+    "path": "ai/rules/narrative.md",
+    "source_scope": "paths:\n  - \"design/narrative/**\""
+  },
+  {
+    "name": "network-code",
+    "path": "ai/rules/network-code.md",
+    "source_scope": "paths:\n  - \"src/networking/**\"\n  - \"Assets/**/{Networking,networking,Network,network}/**/*.cs\"\n  - \"Source/**/{Networking,networking,Network,network}/**/*.{h,cpp}\""
+  },
+  {
+    "name": "prototype-code",
+    "path": "ai/rules/prototype-code.md",
+    "source_scope": "paths:\n  - \"prototypes/**\""
+  },
+  {
+    "name": "scene-files",
+    "path": "ai/rules/scene-files.md",
+    "source_scope": "paths:\n  - \"**/*.tscn\"\n  - \"**/*.tres\"\n  - \"**/*.unity\"\n  - \"**/*.prefab\"\n  - \"Assets/**/*.asset\""
+  },
+  {
+    "name": "shader-code",
+    "path": "ai/rules/shader-code.md",
+    "source_scope": "paths:\n  - \"assets/shaders/**\"\n  - \"**/*.gdshader\"\n  - \"Assets/**/*.{shader,hlsl,cginc,compute,shadergraph}\"\n  - \"Shaders/**\"\n  - \"**/*.{usf,ush}\""
+  },
+  {
+    "name": "skill-authoring",
+    "path": "ai/rules/skill-authoring.md",
+    "source_scope": "paths:\n  - \".claude/skills/**\"\n  - \".claude/agents/**\""
+  },
+  {
+    "name": "test-standards",
+    "path": "ai/rules/test-standards.md",
+    "source_scope": "paths:\n  - \"tests/**\"\n  - \"Assets/Tests/**/*.cs\"\n  - \"Source/**/Tests/**/*.{h,cpp}\""
+  },
+  {
+    "name": "ui-code",
+    "path": "ai/rules/ui-code.md",
+    "source_scope": "paths:\n  - \"src/ui/**\"\n  - \"Assets/**/{UI,Ui,ui}/**/*.cs\"\n  - \"Source/**/{UI,Ui,ui}/**/*.{h,cpp}\""
+  }
+]

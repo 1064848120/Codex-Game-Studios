@@ -1,49 +1,30 @@
 ---
-name: Bug Report
-about: Something isn't working as expected
+name: Bug report / 问题反馈
+about: Report a reproducible Codex Studio problem
 title: "[Bug] "
 labels: bug
 assignees: ''
 ---
 
-## Description
+## What happened / 实际问题
 
-A clear description of what the bug is.
+## Expected behavior / 预期行为
 
-## Steps to Reproduce
+## Reproduction / 复现步骤
+1. Open this repository in Codex.
+2. Describe the request and project state.
+3. Include what the director did and where it stopped.
 
-1. Open Claude Code in a project using this template
-2. Run `/<skill>` or trigger `<agent>`
-3. ...
-4. See error
+## Environment / 环境
+- OS:
+- Codex version/interface:
+- Python version:
+- Engine/version, if relevant:
+- Repository commit:
 
-## Expected Behavior
+## Evidence / 证据
+Include minimal, redacted reports or screenshots.
+Do not include tokens, credentials, private game assets or identifying paths.
 
-What you expected to happen.
-
-## Actual Behavior
-
-What actually happened. Include any error messages or unexpected output.
-
-## Environment
-
-- **OS**: (e.g., Windows 10, macOS 14, Ubuntu 24.04)
-- **Shell**: (e.g., Git Bash, zsh, bash)
-- **Claude Code version**: (run `claude --version`)
-- **Node.js version**: (run `node --version`)
-- **jq installed?**: Yes / No
-- **Python installed?**: Yes / No
-
-## Affected Component
-
-- [ ] Agent (which one?):
-- [ ] Skill (which one?):
-- [ ] Hook (which one?):
-- [ ] Rule (which one?):
-- [ ] Template
-- [ ] Documentation
-- [ ] Other:
-
-## Additional Context
-
-Any other context — screenshots, terminal output, or the session log if relevant.
+## Validation boundary
+Was this observed in a real Codex session, an offline test, or only document review?

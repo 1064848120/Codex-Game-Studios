@@ -27,3 +27,10 @@
 # .gitattributes governs the INDEX. It does not retro-fix a working tree that
 # predates the rule -- run `git add --renormalize .` for that.
 .claude/**/*.md text eol=lf
+
+# Deterministic adapter hashes must survive Windows/Linux checkouts unchanged.
+.claude/** text eol=lf
+ai/** text eol=lf
+.agents/** text eol=lf
+tools/ai/** text eol=lf
+tests/adapter/** text eol=lf
