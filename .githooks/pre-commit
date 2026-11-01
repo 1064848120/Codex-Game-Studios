@@ -1,0 +1,4 @@
+#!/bin/sh
+# Portable equivalent of CCGS's pre-commit checks.  Git invokes this on every
+# platform; Python performs the cross-platform work and returns a real failure.
+exec python tools/ai/guard.py --profile fast --scope staged

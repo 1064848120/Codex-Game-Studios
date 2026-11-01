@@ -14,6 +14,10 @@ Use ai/skills/index.json to select a workflow, ai/roles/index.json for domain
 expertise, and ai/rules/index.json for applicable file scopes.
 Codex discovers .agents/skills/studio-*/SKILL.md. No .codex/skills installation
 or model configuration is required. Plain-chat assistants can read the same files.
+Read docs/ai/HOOK-PARITY.md when a task touches automation, validation, session
+recovery or delegation. At the start and end of a bounded objective, invoke the
+portable event dispatcher and guard internally; do not ask the user to operate
+those commands.
 
 ## Scope and design
 Existing user instructions and authorization take precedence over template
@@ -34,6 +38,10 @@ Use the current host model. Delegation requires host support and authorization;
 otherwise use sequential role passes and label self-review honestly.
 Upstream .claude settings, event hooks and model pins apply only in Claude Code.
 For explicit framework validation run python tools/ai/validate.py.
+For the complete portable gate run `python tools/ai/guard.py --profile full
+--scope all`; for a commit boundary use the fast profile. The optional Git
+bridge is installed only when the user runs `python tools/ai/install-hooks.py
+install`.
 
 ## State and evidence
 Use production/studio/run.json for the in-session workflow plan. Resume from the

@@ -49,7 +49,7 @@ end-to-end tested with all three engines.
 
 ## Verification and limitations
 
-Local checks pass: 24 offline tests, 75 skill-format checks and 105 phase-reference
+Local checks pass: 28 offline tests, 75 skill-format checks and 105 phase-reference
 checks, including validation after extracting the distribution archive.
 The repository includes local commands for checking the exporter, catalogs,
 references and offline tests.
@@ -59,7 +59,10 @@ Natural-language routing and all 74 workflows have not been fully exercised
 through a complete game production. See docs/ai/VALIDATION.md.
 
 - 49 roles are briefs, not 49 automatically running agents.
-- Original Claude event hooks are not registered as equivalent Codex hooks.
+- The project-level responsibilities of all 15 Claude event hooks are exposed
+  through `tools/ai/hooks.py`, `tools/ai/guard.py` and optional `.githooks/`.
+  Codex's private event transport and notification UI remain host-owned; see
+  `docs/ai/HOOK-PARITY.md` for the complete mapping.
 - Sequential role passes are self-review, not independent review.
 - Continuation happens during an active Codex task, not an always-on daemon.
 - Missing runtime or visual tools must be reported as unverified, never passed.

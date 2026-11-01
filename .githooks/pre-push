@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run the complete local gate before a push.  No network or Claude runtime is
+# required; unavailable engine checks are reported as unassessed.
+exec python tools/ai/guard.py --profile full --scope all

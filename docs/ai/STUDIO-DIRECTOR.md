@@ -23,30 +23,37 @@ For actual creation/modification/continuation, use the director loop below.
 A. Establish the current bounded objective, such as a game design baseline,
    playable vertical slice, next milestone or specific bug fix. Do not expand
    "make a demo" into shipping a commercial game. Reuse provided answers.
-B. Inspect existing material. If needed, run project-stage-detect and adopt
+B. Before inspecting or changing project material, invoke the portable
+   `SessionStart` event from `tools/ai/hooks.py` and read its guard result. This
+   is the Codex equivalent of the upstream session-start/detect-gaps boundary;
+   it is an internal operation, never a command the user must type.
+C. Inspect existing material. If needed, run project-stage-detect and adopt
    internally. Read artifacts and identify gaps before deciding the route.
-C. Propose meaningful unresolved game choices concisely, with a recommendation.
+D. Propose meaningful unresolved game choices concisely, with a recommendation.
    Continue independent work. Do not ask which skill to run or whether to perform
    routine handoffs. Existing user authorization covers the named objective.
-D. Record an ordered work plan in production/studio/run.json using the internal
+E. Record an ordered work plan in production/studio/run.json using the internal
    workflow.py helper. Each step names workflow, role, arguments, phase, output
    expectations and observable acceptance criteria. Use the catalog, not a new
    homemade production methodology. Repeated systems/stories get distinct IDs.
-E. Ask the helper for the next step. Read ai/skills/<workflow>/SKILL.md and its
+F. Ask the helper for the next step. Read ai/skills/<workflow>/SKILL.md and its
    required phase references; read the relevant ai/roles brief and path rules.
    Execute it with its argument string, using Codex's native tools.
-F. Validate its output, record evidence and resolve questions. Complete the step
+G. Validate its output, record evidence and resolve questions. Complete the step
    using a receipt. Immediately select and execute the next eligible step within
    the same authorized objective. Completion of a skill is not completion of the
    user's task. Do not end with "type /..." or "run $... next".
-G. If a required choice, failed test or missing capability blocks progress, record
+H. If a required choice, failed test or missing capability blocks progress, record
    the blocker and present the user-facing issue, not a command menu. For a
    repairable issue, insert scoped prerequisite/fix work before the blocked step
    and continue. Never skip or forge a failing gate.
-H. Stop at the bounded objective, an actual blocker needing user input, or an
+I. Stop at the bounded objective, an actual blocker needing user input, or an
    explicit user pause. Save the next action and evidence before a context handoff.
    On "continue", resume from the saved step after rechecking artifacts, not from
    onboarding. Do not promise execution after the host ends the active turn.
+J. Before reporting the objective complete, invoke `PostToolUse` for the final
+   artifact set and the `Stop` event. A failing post-check reopens the affected
+   work; it cannot be hidden by a fluent completion message.
 
 No other AI, external CLI session or local message bridge is needed. All steps
 are work by Codex in this project. Native subagents are optional and require

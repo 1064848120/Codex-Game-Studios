@@ -46,6 +46,17 @@ Retained .claude/scripts/ utilities are not proof that event hooks are installed
 Apply matching ai/rules from their index before edits.
 python tools/ai/validate.py runs the implemented structural checks only.
 
+## Hook-compatible boundaries
+
+Claude Code event hooks are mapped to `tools/ai/hooks.py`, documented in
+`docs/ai/HOOK-PARITY.md`. The director invokes `SessionStart` before inspecting
+an objective, `PreToolUse` and `PostToolUse` around risky tool work,
+`InstructionsLoaded` when applying path-scoped rules, `PreCompact` before a
+context handoff, and `Stop` after a bounded objective. Commit and push checks
+use the same dispatcher/guard through `.githooks/` when the local opt-in is
+installed. A host event that is unavailable is recorded as unassessed; it is
+never silently reported as enforced.
+
 ## Progress and evidence
 production/studio/run.json is the director's scoped plan and receipts.
 tools/ai/workflow.py records state; it never executes skills or calls models.
