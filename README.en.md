@@ -49,7 +49,7 @@ end-to-end tested with all three engines.
 
 ## Verification and limitations
 
-Local checks pass: 28 offline tests, 75 skill-format checks and 105 phase-reference
+Local checks pass: 32 offline tests, 75 skill-format checks and 105 phase-reference
 checks, including validation after extracting the distribution archive.
 The repository includes local commands for checking the exporter, catalogs,
 references and offline tests.

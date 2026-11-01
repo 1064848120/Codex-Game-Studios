@@ -8,3 +8,7 @@ No Claude Code installation, multi-AI CLI bridge or API key setup is needed.
 Native subagents are optional when permitted; sequential passes are self-review.
 See README.zh-CN.md for normal use and docs/ai/COMPATIBILITY.md for exact limits.
 
+For adapter diagnostics only, `python tools/ai/studio.py audit --json` checks
+the upstream hook inventory and Codex wrapper coverage. `studio.py skills`
+lists the internal workflows; users normally do not need to invoke them.
+

@@ -18,6 +18,9 @@ import subprocess
 import sys
 from typing import Iterable
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 ROOT = Path(__file__).resolve().parents[2]
 DATA_RE = re.compile(r"^(assets|Assets|Content)/(?:.*/)?[Dd]ata/.*\.[Jj][Ss][Oo][Nn]$")
 SECRET_PATTERNS = (
@@ -95,6 +98,16 @@ def check_structure(root: Path, findings: list[Finding]):
         validate.check(root)
     except Exception as exc:
         findings.append(Finding("error", "structure", str(exc)))
+
+
+def check_hook_parity(root: Path, findings: list[Finding]):
+    try:
+        audit = importlib_spec(root / "tools/ai/audit.py")
+        result = audit.audit(root)
+        for item in result["findings"]:
+            findings.append(Finding(item["level"], item["check"], item["message"], item.get("path", "")))
+    except Exception as exc:
+        findings.append(Finding("error", "hook-parity", str(exc)))
 
 
 def check_json_data(root: Path, findings: list[Finding]):
@@ -192,6 +205,7 @@ def main(argv: list[str] | None = None) -> int:
     findings: list[Finding] = []
     check_generated(root, findings)
     check_structure(root, findings)
+    check_hook_parity(root, findings)
     check_json_data(root, findings)
     check_git_whitespace(root, findings)
     check_secrets(root, findings, "all" if args.scope == "all" else "changed")

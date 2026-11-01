@@ -57,9 +57,20 @@ production/studio/history/：已完成目标的历史记录。
 进度脚本本身不会调用 AI，也不会在关掉 Codex 后继续后台运行。
 自动衔接发生在正在运行的 Codex 任务内；中断后从记录恢复。
 
+如果需要查看适配层本身，可以使用统一入口：
+
+```text
+python tools/ai/studio.py audit --json
+python tools/ai/studio.py guard --profile full --scope all
+python tools/ai/studio.py skills
+```
+
+这些是维护和诊断入口，正常开发仍然直接用自然语言，不能用它们代替
+工作室总控的策划和开发判断。
+
 ## 已验证的范围
 
-- 28 项自动化测试：新项目路线、已有项目接续、仅设计范围、简化路线、
+- 32 项自动化测试：新项目路线、已有项目接续、仅设计范围、简化路线、
   重复系统、内部自动选下一步、中断恢复、失败门禁、证据失效和归档等。
 - 75 个 Codex 技能格式检查。
 - 105 处阶段引用完整性。

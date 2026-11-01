@@ -44,6 +44,20 @@ tools are reported as `UNASSESSED`; they are never presented as a pass. Use
 `--strict` when a release or CI environment must fail on warnings and
 unassessed checks.
 
+For a single portable entry point, use `tools/ai/studio.py`:
+
+```text
+python tools/ai/studio.py audit --json
+python tools/ai/studio.py guard --profile full --scope all
+python tools/ai/studio.py skills
+python tools/ai/studio.py event PreCompact
+python tools/ai/studio.py next --json
+```
+
+This entry point does not replace the natural-language director. It makes the
+same project capabilities available to Codex, scripts and other assistants
+without requiring Claude Code or a vendor-specific command parser.
+
 This is stronger automation than the previous adaptation while staying honest:
 Codex still has no universal per-tool hook API, so the director must run the
 guard at the start and end of a bounded objective, and Git hooks cover commits
