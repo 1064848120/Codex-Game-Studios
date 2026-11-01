@@ -11,7 +11,7 @@ Codex inside this project. No cross-AI bridge is included in this revision.
 | Roles/workflows | 49 source roles, 74 source workflows + one Codex director |
 | Progress | In-session ledger, next-step dispatch, evidence hashes, saved checkpoint |
 | Reviews | Actual reviewer required; sequential passes explicitly self-review |
-| Original 15 event hooks | Not registered as Codex hooks |
+| Original 15 event hooks | Project-level behavior exposed through `tools/ai/hooks.py`, `tools/ai/guard.py` and optional `.githooks/`; Codex host transport/UI remains host-owned |
 | Path rules | Explicit matching/reading from the adapted rules index |
 | Model settings | Current Codex host settings; original Claude pins ignored |
 | Long work | Continue during active turn; resume from disk after interruption |
@@ -26,6 +26,12 @@ Offline tests verify dispatch/state/evidence failure and recovery behavior.
 Skill/frontmatter checks verify discovery format and reference integrity.
 Neither proves that every model choice is correct or that a game is balanced.
 A complete real game has not been built/played to validate all 74 workflows.
+
+The complete event mapping and boundary contract is in
+`docs/ai/HOOK-PARITY.md`. The original `.claude/hooks/` and `.claude/scripts/`
+remain byte-for-byte available as upstream source and continue to be usable
+when a workflow explicitly needs one; the portable dispatcher provides the
+Codex-native path without requiring Claude Code.
 
 Official Codex discovery reference:
 https://developers.openai.com/codex/skills/
